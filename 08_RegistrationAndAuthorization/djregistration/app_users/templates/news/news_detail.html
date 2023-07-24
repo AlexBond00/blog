@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{object.hedline_news}}</title>
+</head>
+
+<body>
+    <p>Пользователь - {{request.user}} </p>
+    <h2>{{object.hedline_news}}</h2>
+    <p>
+        {{object.text_news}}<br><br>
+        Статус: {{object.status}}<br>
+        Дата создания: {{object.created_news}}<br>
+        Дата редактирования: {{object.update_news}}<br>
+    </p>
+
+    <h3>Комментарии</h3>
+    <hr>
+    {% for comment in object.news_comment.all %}
+        Комментарий от: {{ comment.name_commentator }}<br>
+        Текст комментария: {{ comment.text_comment }}
+    <hr>
+    {% endfor %}
+
+
+
+    <p>Добавить комментарий:</p>
+    <form method="post" action={{messages.id}}>
+        {% csrf_token %}
+        {{ form.as_p }}<br>
+        <button type="submit">Добавить</button>
+    </form>
+
+</body>
+</html>

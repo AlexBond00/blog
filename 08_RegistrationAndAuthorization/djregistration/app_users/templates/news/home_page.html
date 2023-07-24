@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+</head>
+<body>
+    <h2>Новости</h2>
+    <p>{{request.user}}</p>
+
+    <ul>
+        <li>
+            <a href="news_list">Список новостей</a>
+        </li>
+    {% if verification_flag %}
+        <li>
+            <a href="create_news">Добавить новость</a>
+        </li>
+    {% endif %}
+    {% if superuser_flag %}
+        <li>
+            <a href="/profile_list">Профили пользователей</a>
+        </li>
+    {% endif %}
+    </ul>
+</body>
+</html>

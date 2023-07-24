@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница регистрации</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Войти</button>
+    </form>
+    <br>
+    <form method="get" action="signup">
+        {% csrf_token %}
+        <button type="submit">Регистрация</button>
+    </form>
+    <br>
+    <form method="get" action='app_users/home_page'>
+        <button type="submit">На главную</button>
+    </form>
+</body>
+</html>

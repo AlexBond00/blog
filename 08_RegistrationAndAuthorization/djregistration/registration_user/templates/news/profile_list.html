@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+</head>
+<body>
+    <h2>Список зарегистрированных пользователей</h2>
+        <ul>
+            {% for profile in object_list %}
+            <p>
+                <a href="update_user/{{profile.id}}">{{profile}}</a>
+                {% if profile.users.superuser_flag %}
+                    - Модератор
+                {% elif profile.users.verification_flag %}
+                    - Верифицированный пользователь
+                {% else %}
+                    - Обычный пользователь
+                {% endif %}
+            </p>
+            {% endfor %}
+        </ul>
+</body>
+</html>

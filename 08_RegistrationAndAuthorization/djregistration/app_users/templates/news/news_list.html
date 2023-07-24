@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список новостей</title>
+</head>
+<body>
+    <h2>Оглавление</h2>
+
+    {% if news_list %}
+        <ul>
+            {% for new in object_list %}
+                {% if new.print_flag %}
+                    <p>
+                        <a href="news_detail/{{new.id}}">{{new}}</a>
+                    </p>
+                        {% if request.user.is_authenticated%}
+                            {% if request.user.users.verification_flag %}
+                                <form method="get" action='update_news/{{new.id}}'>
+                                    {% csrf_token %}
+                                    <button type="submit">Редактировать</button>
+                                </form>
+                            {% endif %}
+                    {% endif %}
+                {% elif request.user.is_authenticated%}
+                    {% if request.user.users.superuser_flag %}
+                        <p>
+                            <a href="news_detail/{{new.id}}">{{new}}</a>
+                            - Новость не опубликована. Нет одобрения модератора.
+                            <form method="get" action='update_news/{{new.id}}'>
+                                {% csrf_token %}
+                                <button type="submit">Редактировать</button>
+                            </form>
+                        </p>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Объявлений нет</p>
+    {% endif %}
+
+
+    <form action="news_list" method="GET" name="form" id="sort">
+        <div class="box">
+             <h4>Cортировка:</h4>
+            <ul class="menu" role="menu1" aria-labelledby="menu2">
+                <li><button type="submit" name="orderby" value="created_news">По дате (более ранние снизу)</button></li><br>
+                <li><button type="submit" name="orderby" value="-created_news">По дате (более ранние сверху)</button></li>
+            </ul>
+        </div>
+    </form>
+
+    <form action="news_list" method="GET" name="form1" id="sort1">
+        <div class="box">
+            <h4>Сортировка по тегу:</h4>
+            <ul class="menu" role="menu1" aria-labelledby="menu2">
+                <li><input type="text" name="orderby" value="тег"></li>
+                <input type="submit" value="Сортировать">
+           </ul>
+        </div>
+    </form>
+
+</body>
+</html>
